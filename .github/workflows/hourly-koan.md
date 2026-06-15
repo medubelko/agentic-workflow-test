@@ -1,17 +1,17 @@
 ---
-emoji: 🎋
-description: Write a new Zen koan to the koans directory every hour
+description: Write a new Zen koan every hour
 on:
   schedule:
     - cron: "0 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
+  copilot-requests: write
 strict: true
 safe-outputs:
   create-pull-request:
-    title-prefix: "[koan] "
-    labels: [koan, automated]
+    title-prefix: "[workflow] "
+    labels: [automated]
     draft: false
     auto-merge: true
     allowed-files:
@@ -33,15 +33,9 @@ Generate a unique, original Zen koan and commit it as a new file in the `koans/`
    ```
    Use this to form the filename: `koans/YYYY-MM-DDTHH.md`
 
-2. Check whether that file already exists:
-   ```bash
-   test -f koans/<timestamp>.md && echo "exists" || echo "new"
-   ```
-   If the file already exists, call `noop` with the message "Koan for this hour already written."
+2. Generate a new, original Zen koan — a short paradoxical statement or dialogue in the style of classical koans (e.g., Rinzai or Soto). It should be thought-provoking, concise, and not a well-known existing koan.
 
-3. Generate a new, original Zen koan — a short paradoxical statement or dialogue in the style of classical koans (e.g., Rinzai or Soto). It should be thought-provoking, concise, and not a well-known existing koan.
-
-4. Write the file `koans/<timestamp>.md` with this exact structure:
+3. Write the file `koans/<timestamp>.md` with this exact structure:
    ```markdown
    # Koan
 
@@ -51,6 +45,8 @@ Generate a unique, original Zen koan and commit it as a new file in the `koans/`
 
    *Written at <ISO 8601 UTC timestamp, e.g. 2025-06-14T19:00Z>*
    ```
+
+4. Commit the new koan file using conventional commit syntax, but use type `chore:`.
 
 5. Use `create-pull-request` with:
    - Title: the first 6–8 words of the koan
