@@ -40,16 +40,12 @@ Generate a unique, original Zen koan and commit it as a new file in the `koans/`
    # Koan
 
    <koan text>
-
-   ---
-
-   *Written at <ISO 8601 UTC timestamp, e.g. 2025-06-14T19:00Z>*
    ```
 
-4. Commit the new koan file using conventional commit syntax, but use type `chore:`.
+4. Commit the new koan file using conventional commit syntax, but use type `chore: <timestamp>`. Use the same timestamp as the file.
 
 5. Use `create-pull-request` with:
-   - Title: the first 6–8 words of the koan
+   - Title: add koan for <timestamp>
    - Body: the full koan text
 
 ## Safe Outputs
