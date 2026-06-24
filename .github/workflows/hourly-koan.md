@@ -1,8 +1,6 @@
 ---
 description: Write a new Zen koan every hour
 on:
-  schedule:
-    - cron: "0 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
