@@ -58,6 +58,8 @@ safe-outputs:
     title-prefix: "[Docs digest]"
     labels: [automated]
     group-by-day: true
+  noop:
+    report-as-issue: false
 network:
   allowed:
     - ubuntu.com
