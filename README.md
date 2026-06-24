@@ -39,7 +39,7 @@ Once the LLM is finished, two new files are in your repository – the Markdown 
 
 In the Markdown file, edit the permissions so that it consumes your company-provided Copilot subscription, not your personal one:
 
-```md
+```diff
  permissions:
    contents: read
 +   copilot-requests: write
