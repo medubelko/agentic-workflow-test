@@ -6,9 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       SITE:
-        description: Root URL of the documentation site. Defaults to Rockcraft docs.
+        description: Root URL of the documentation site. Defaults to Chisel docs.
         required: false
         type: string
+        default: https://ubuntu.com/chisel/docs/latest
 permissions:
   contents: read
   issues: read
@@ -19,7 +20,7 @@ tools:
     toolsets:
       - issues
 env:
-  SITE: https://documentation.ubuntu.com/rockcraft
+  SITE: https://ubuntu.com/chisel/docs/latest
   DATA_DIR: /tmp/gh-aw/data/
   LLMS_TXT_NEW: /tmp/gh-aw/data/llms-full-new.txt
   LLMS_TXT_OLD: /tmp/gh-aw/data/llms-full-old.txt
