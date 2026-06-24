@@ -6,15 +6,17 @@ on:
   workflow_dispatch:
     inputs:
       SITE:
-        description: Base URL of the documentation site (e.g. https://docs.example.com). Overrides the `DOCS_SITE` repository variable.
+        description: Root URL of the documentation site.
         required: false
         type: string
 permissions:
   contents: read
+  issues: read
 tools:
   github:
     mode: gh-proxy
-    toolsets: [default]
+    toolsets:
+      - issues
 env:
   SITE: https://documentation.ubuntu.com/rockcraft
   DATA_DIR: /tmp/gh-aw/data/
