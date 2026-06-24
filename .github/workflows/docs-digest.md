@@ -6,12 +6,13 @@ on:
   workflow_dispatch:
     inputs:
       SITE:
-        description: Root URL of the documentation site.
+        description: Root URL of the documentation site. Defaults to Rockcraft docs.
         required: false
         type: string
 permissions:
   contents: read
   issues: read
+  copilot-requests: write
 tools:
   github:
     mode: gh-proxy

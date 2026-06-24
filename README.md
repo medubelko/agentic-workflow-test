@@ -42,7 +42,7 @@ In the Markdown file, edit the permissions so that it consumes your company-prov
 ```diff
  permissions:
    contents: read
-+   copilot-requests: write
++  copilot-requests: write
 ```
 
 With the Markdown file edited, regenerate the lockfile:
