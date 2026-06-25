@@ -37,7 +37,7 @@ steps:
     run: |
       SITE="${{ github.event.inputs.SITE || env.SITE }}"
 
-      curl -fsSL "${SITE%/}/llms-full.txt" -o "$LLMS_TXT"
+      curl -fsSL "${SITE%/}/llms-full.txt" --create-dirs -o "$LLMS_TXT"
 
       if ${{ steps.download.outcome != 'failure' }}; then
         diff "$LLMS_TXT_OLD" "$LLMS_TXT" > "$LLMS_TXT_DIFF" || true
