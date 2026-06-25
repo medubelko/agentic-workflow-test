@@ -22,7 +22,7 @@ tools:
 env:
   SITE: https://ubuntu.com/chisel/docs/latest
   DATA_DIR: /tmp/gh-aw/data/
-  LLMS_TXT_NEW: /tmp/gh-aw/data/llms-full-new.txt
+  LLMS_TXT: /tmp/gh-aw/data/llms-full.txt
   LLMS_TXT_OLD: /tmp/gh-aw/data/llms-full-old.txt
   LLMS_TXT_DIFF: /tmp/gh-aw/data/llms-full-diff.txt
 steps:
@@ -33,26 +33,30 @@ steps:
       name: llms-full-txt
       path: ${{ env.DATA_DIR }}
     continue-on-error: true
-  - name: Fetch current llms-full.txt and create diff
+  - name: Create diff
     run: |
       SITE="${{ github.event.inputs.SITE || env.SITE }}"
 
-      mkdir -p /tmp/gh-aw/data
-      curl -fsSL "${SITE%/}/llms-full.txt" -o "$LLMS_TXT_NEW"
+      curl -fsSL "${SITE%/}/llms-full.txt" -o "$LLMS_TXT"
 
       if ${{ steps.download.outcome != 'failure' }}; then
-        cp "${{ env.DATA_DIR}}/llms-full.txt" "$LLMS_TXT_OLD"
-        diff "$LLMS_TXT_OLD" "$LLMS_TXT_NEW" > "$LLMS_TXT_DIFF" || true
-      else
-        touch "$LLMS_TXT_DIFF"
+        diff "$LLMS_TXT_OLD" "$LLMS_TXT" > "$LLMS_TXT_DIFF" || true
       fi
+
   - name: Store latest llms.txt
     uses: actions/upload-artifact@v4
     with:
       name: llms-full-txt
-      path: ${{ env.LLMS_TXT_NEW }}
+      path: ${{ env.LLMS_TXT }}
       overwrite: true
       retention-days: 15
+  - name: Skip agent run if no digest created
+    run: |
+      if [[ ! -e "$LLMS_TXT_DIFF" ]]; then
+        echo '{"type":"noop","message":"No diff available"}' >> "$GH_AW_SAFE_OUTPUTS"
+      fi
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 safe-outputs:
   create-issue:
     title-prefix: "[Docs digest]"
