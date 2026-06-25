@@ -67,6 +67,7 @@ safe-outputs:
     group-by-day: true
   noop:
     report-as-issue: false
+  report-failure-as-issue: false
 network:
   allowed:
     - ubuntu.com
