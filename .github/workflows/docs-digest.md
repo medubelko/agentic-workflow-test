@@ -13,6 +13,7 @@ on:
 permissions:
   contents: read
   issues: read
+  actions: read
   copilot-requests: write
 tools:
   github:
@@ -32,6 +33,7 @@ steps:
     with:
       name: llms-full-txt
       path: ${{ env.DATA_DIR }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
     continue-on-error: true
   - name: Create diff
     run: |
