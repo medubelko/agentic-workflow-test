@@ -27,6 +27,15 @@ env:
   LLMS_TXT_OLD: /tmp/gh-aw/data/llms-full-old.txt
   LLMS_TXT_DIFF: /tmp/gh-aw/data/llms-full-diff.txt
 steps:
+  - name: Get previous run ID
+    id: get-last-run
+    run: |
+      RUN_ID=$(gh run list -w "$GITHUB_WORKFLOW" \
+        --limit 1 --status completed \
+        --json 'databaseId' --jq '.[0].databaseId')
+      echo "run-id=$RUN_ID" >> "$GITHUB_OUTPUT"
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   - name: Fetch previous llms.txt
     uses: actions/download-artifact@v8
     id: download
@@ -34,6 +43,7 @@ steps:
       name: llms-full-txt
       path: ${{ env.DATA_DIR }}
       github-token: ${{ secrets.GITHUB_TOKEN }}
+      run-id: ${{ steps.get-last-run.outputs.run-id }}
     continue-on-error: true
   - name: Create diff
     run: |
