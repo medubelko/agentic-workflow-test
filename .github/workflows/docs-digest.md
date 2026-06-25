@@ -43,11 +43,14 @@ steps:
         diff "$LLMS_TXT_OLD" "$LLMS_TXT" > "$LLMS_TXT_DIFF" || true
       fi
 
+      # Replace the old file because the upload action can't change the filename
+      mv "$LLMS_TXT" "$LLMS_TXT_OLD"
+
   - name: Store latest llms.txt
     uses: actions/upload-artifact@v4
     with:
       name: llms-full-txt
-      path: ${{ env.LLMS_TXT }}
+      path: ${{ env.LLMS_TXT_OLD }}
       overwrite: true
       retention-days: 15
   - name: Skip agent run if no digest created
