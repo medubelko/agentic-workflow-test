@@ -27,7 +27,7 @@ env:
   LLMS_TXT_DIFF: /tmp/gh-aw/data/llms-full-diff.txt
 steps:
   - name: Fetch previous llms.txt
-    uses: actions/download-artifact@v4
+    uses: actions/download-artifact@v8
     id: download
     with:
       name: llms-full-txt
@@ -47,7 +47,7 @@ steps:
       mv "$LLMS_TXT" "$LLMS_TXT_OLD"
 
   - name: Store latest llms.txt
-    uses: actions/upload-artifact@v4
+    uses: actions/upload-artifact@v7
     with:
       name: llms-full-txt
       path: ${{ env.LLMS_TXT_OLD }}
