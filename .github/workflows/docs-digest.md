@@ -72,6 +72,7 @@ steps:
       fi
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+engine: copilot/*sonnet-4.6*
 safe-outputs:
   create-issue:
     title-prefix: "[Docs digest]"
